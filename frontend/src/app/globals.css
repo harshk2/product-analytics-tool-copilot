@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 199 89% 48%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 199 89% 48%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Chat message styles */
+  .chat-message {
+    @apply animate-slide-up;
+  }
+
+  .chat-message-user {
+    @apply flex justify-end;
+  }
+
+  .chat-message-assistant {
+    @apply flex justify-start;
+  }
+
+  .chat-bubble {
+    @apply max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed;
+  }
+
+  .chat-bubble-user {
+    @apply bg-brand-600 text-white rounded-br-sm;
+  }
+
+  .chat-bubble-assistant {
+    @apply bg-surface-1 border border-surface-3 rounded-bl-sm;
+  }
+
+  /* Typing indicator */
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-brand-400 animate-pulse-dot;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* KPI card */
+  .kpi-card {
+    @apply bg-white rounded-xl border border-surface-3 p-5 shadow-sm
+           hover:shadow-md transition-shadow duration-200;
+  }
+
+  /* Agent badge */
+  .agent-badge {
+    @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  /* Hypothesis card */
+  .hypothesis-card {
+    @apply rounded-lg border p-4 space-y-2 transition-colors duration-150;
+  }
+
+  .hypothesis-card-high {
+    @apply border-red-200 bg-red-50;
+  }
+
+  .hypothesis-card-medium {
+    @apply border-yellow-200 bg-yellow-50;
+  }
+
+  .hypothesis-card-low {
+    @apply border-green-200 bg-green-50;
+  }
+
+  /* Loading shimmer */
+  .shimmer {
+    @apply bg-gradient-to-r from-surface-2 via-surface-3 to-surface-2
+           bg-[length:1000px_100%] animate-shimmer;
+  }
+
+  /* Code block */
+  .code-block {
+    @apply font-mono text-xs bg-gray-900 text-green-400 rounded-lg p-4 overflow-x-auto;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface-1;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-3 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}

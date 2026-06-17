@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'analytics-copilot'
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+scrape_configs:
+  # ── Backend FastAPI Metrics ────────────────────────────────────────────────
+  - job_name: 'analytics-copilot-backend'
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+
+  # ── Celery Worker Metrics (via Flower) ────────────────────────────────────
+  - job_name: 'celery-flower'
+    static_configs:
+      - targets: ['flower:5555']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # ── PostgreSQL Metrics (via postgres_exporter) ────────────────────────────
+  # Uncomment when adding postgres_exporter to docker-compose
+  # - job_name: 'postgres'
+  #   static_configs:
+  #     - targets: ['postgres-exporter:9187']
+
+  # ── Redis Metrics (via redis_exporter) ────────────────────────────────────
+  # Uncomment when adding redis_exporter to docker-compose
+  # - job_name: 'redis'
+  #   static_configs:
+  #     - targets: ['redis-exporter:9121']
+
+  # ── Prometheus self-monitoring ────────────────────────────────────────────
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

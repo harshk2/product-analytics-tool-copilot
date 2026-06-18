@@ -45,7 +45,7 @@ COPY pyproject.toml poetry.lock* ./
 
 # Install only production dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-dev
+    && poetry install --no-interaction --without dev
 
 # ─── Production Stage ─────────────────────────────────────────────────────────
 FROM python:3.11-slim AS production

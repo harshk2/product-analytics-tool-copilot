@@ -1,7 +1,8 @@
 """Unit tests for IntentAgent — LLM output parsing and state updates."""
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
 import json
+from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 
 
 @pytest.mark.asyncio
@@ -127,7 +128,7 @@ class TestIntentAgent:
         agent = self._make_agent_with_mock_llm(mock_response)
 
         # Verify the LLM was invoked (context should be included in prompt)
-        result = await agent.run(state)
+        await agent.run(state)
         agent.llm.ainvoke.assert_called_once()
 
     async def test_intent_result_has_required_fields(self, sample_investigation_state):

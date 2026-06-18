@@ -1,18 +1,19 @@
 """LangGraph state definition for the investigation workflow."""
 from datetime import datetime
-from typing import Any, Annotated
+from typing import Annotated, Any
+
 from typing_extensions import TypedDict
 
 from app.schemas import (
-    InvestigationPlan,
-    MetricValue,
     CohortAnalysisResult,
-    SegmentationResult,
-    RootCauseResult,
-    Visualization,
     ExecutiveSummary,
+    InvestigationPlan,
     InvestigationStatus,
+    MetricValue,
+    RootCauseResult,
+    SegmentationResult,
     SQLGenerationResult,
+    Visualization,
 )
 
 

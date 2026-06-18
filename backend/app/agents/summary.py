@@ -68,7 +68,6 @@ class ExecutiveSummaryAgent(BaseAgent):
         cohort_analysis = state.get("cohort_analysis")
         segmentation = state.get("segmentation")
         metric_values = state.get("metric_values", [])
-        visualizations = state.get("visualizations", [])
 
         synthesis_prompt = self._build_synthesis_prompt(
             question=question,

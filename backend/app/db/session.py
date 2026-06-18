@@ -85,8 +85,9 @@ async def init_db() -> None:
     For production, use Alembic migrations instead.
     """
     from app.db.base import Base  # noqa: F401
+
     # Import all models to register them
-    from app.models import user, event, subscription, payment, investigation  # noqa: F401
+    from app.models import event, investigation, payment, subscription, user  # noqa: F401
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)

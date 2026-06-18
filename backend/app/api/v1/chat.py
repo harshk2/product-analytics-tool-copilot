@@ -1,8 +1,8 @@
 """Chat API endpoints with SSE streaming."""
 import json
 import uuid
+from collections.abc import AsyncGenerator
 from datetime import datetime
-from typing import AsyncGenerator
 
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, status

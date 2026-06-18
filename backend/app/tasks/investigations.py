@@ -1,6 +1,5 @@
 """Investigation-related Celery tasks."""
 import asyncio
-import uuid
 from datetime import datetime, timedelta
 
 import structlog
@@ -42,12 +41,13 @@ def run_investigation_async(self, investigation_id: str, question: str, session_
         question: The business question to investigate.
         session_id: Optional session ID for context.
     """
+    from sqlalchemy import select
     from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
     from sqlalchemy.orm import sessionmaker
+
     from app.config import settings
     from app.graph.compiler import InvestigationGraph
     from app.models import Investigation
-    from sqlalchemy import select
 
     async def _run():
         engine = create_async_engine(settings.DATABASE_URL, echo=False)
@@ -71,7 +71,7 @@ def run_investigation_async(self, investigation_id: str, question: str, session_
                 if investigation and final_state.get("executive_summary"):
                     es = final_state["executive_summary"]
                     investigation.summary = es.summary
-                    investigation.findings = [f for f in es.key_findings]
+                    investigation.findings = list(es.key_findings)
                     investigation.recommendations = [
                         {
                             "action": r.action,
@@ -99,7 +99,7 @@ def run_investigation_async(self, investigation_id: str, question: str, session_
                     error=str(e),
                     exc_info=True,
                 )
-                raise self.retry(exc=e, countdown=60)
+                raise self.retry(exc=e, countdown=60) from e
             finally:
                 await engine.dispose()
 
@@ -117,6 +117,7 @@ def cleanup_stale_investigations():
     """
     from sqlalchemy import create_engine, update
     from sqlalchemy.orm import sessionmaker
+
     from app.config import settings
     from app.models import Investigation
 

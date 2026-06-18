@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 import structlog
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import SystemMessage, HumanMessage
 
 from app.config import settings
 from app.graph.state import InvestigationState
@@ -54,7 +54,7 @@ class BaseAgent(ABC):
     async def invoke(self, state: InvestigationState) -> dict[str, Any]:
         """Wrapper around run() that adds tracing and error handling."""
         start_time = time.monotonic()
-        logger.info(f"Agent starting", agent=self.name, investigation_id=state["investigation_id"])
+        logger.info("Agent starting", agent=self.name, investigation_id=state["investigation_id"])
 
         try:
             result = await self.run(state)

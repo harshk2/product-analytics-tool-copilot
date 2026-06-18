@@ -1,8 +1,8 @@
 """Pytest configuration and shared fixtures."""
-import asyncio
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
 import pytest_asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
 from httpx import AsyncClient
 
 from app.main import app

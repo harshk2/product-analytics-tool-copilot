@@ -348,7 +348,7 @@ The queries should collectively provide data for:
             # Convert to list of dicts
             columns = list(result.keys())
             rows = result.fetchmany(settings.SQL_MAX_ROWS)
-            results = [dict(zip(columns, row)) for row in rows]
+            results = [dict(zip(columns, row, strict=False)) for row in rows]
 
             return SQLGenerationResult(
                 query=query,

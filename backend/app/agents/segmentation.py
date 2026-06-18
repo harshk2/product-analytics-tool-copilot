@@ -5,7 +5,7 @@ import structlog
 
 from app.agents.base import BaseAgent
 from app.graph.state import InvestigationState
-from app.schemas import SegmentationResult, Segment
+from app.schemas import Segment, SegmentationResult
 
 logger = structlog.get_logger(__name__)
 

@@ -5,7 +5,7 @@ import structlog
 
 from app.agents.base import BaseAgent
 from app.graph.state import InvestigationState
-from app.schemas import InvestigationPlan, IntentType, AnalysisType
+from app.schemas import AnalysisType, IntentType, InvestigationPlan
 
 logger = structlog.get_logger(__name__)
 

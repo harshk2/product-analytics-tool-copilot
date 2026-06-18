@@ -6,10 +6,10 @@ import structlog
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
 from app.config import settings
-from app.db.session import init_db, close_db
+from app.db.session import close_db, init_db
 
 logger = structlog.get_logger(__name__)
 
@@ -120,8 +120,9 @@ def create_app() -> FastAPI:
     # ── Routes ─────────────────────────────────────────────────────────────────
 
     # API v1 router
-    from app.api.v1 import chat, query, memory, dashboard
     from fastapi import APIRouter
+
+    from app.api.v1 import chat, dashboard, memory, query
 
     api_v1 = APIRouter(prefix=settings.API_V1_PREFIX)
     api_v1.include_router(chat.router, prefix="/chat", tags=["Chat"])

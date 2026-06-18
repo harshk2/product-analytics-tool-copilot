@@ -3,12 +3,12 @@ from datetime import datetime, timedelta
 
 import structlog
 from fastapi import APIRouter, Depends
-from sqlalchemy import func, select, and_
+from sqlalchemy import and_, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db
 from app.models import Investigation
-from app.schemas import DashboardResponse, KPIValue, DashboardAlert
+from app.schemas import DashboardResponse, KPIValue
 
 logger = structlog.get_logger(__name__)
 router = APIRouter()
@@ -33,7 +33,7 @@ async def get_dashboard(
 
     try:
         # Active Users KPI
-        from app.models import User, Event
+        from app.models import Event
 
         # Current week DAU (average)
         curr_dau_result = await db.execute(

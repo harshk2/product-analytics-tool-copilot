@@ -1,6 +1,5 @@
 """Analytics Celery tasks: materialized view refresh and anomaly detection."""
 import structlog
-from celery import Task
 
 from app.tasks.celery_app import celery_app
 
@@ -18,6 +17,7 @@ def refresh_materialized_views():
     """
     from sqlalchemy import create_engine, text
     from sqlalchemy.orm import sessionmaker
+
     from app.config import settings
 
     engine = create_engine(settings.DATABASE_URL_SYNC)
@@ -56,6 +56,7 @@ def compute_daily_metrics():
     """
     from sqlalchemy import create_engine, text
     from sqlalchemy.orm import sessionmaker
+
     from app.config import settings
 
     engine = create_engine(settings.DATABASE_URL_SYNC)
@@ -89,12 +90,14 @@ def run_anomaly_detection():
 
     Creates alerts in Redis for the dashboard.
     """
+    import json
+    from datetime import datetime
+
+    import redis
     from sqlalchemy import create_engine, text
     from sqlalchemy.orm import sessionmaker
+
     from app.config import settings
-    import json
-    import redis
-    from datetime import datetime
 
     engine = create_engine(settings.DATABASE_URL_SYNC)
     Session = sessionmaker(engine)

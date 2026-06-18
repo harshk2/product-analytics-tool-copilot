@@ -1,5 +1,4 @@
 """Unit tests for SQLValidator — the critical safety layer."""
-import pytest
 from app.agents.sql import SQLValidator
 
 

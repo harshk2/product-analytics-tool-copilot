@@ -1,10 +1,11 @@
 """Data access repositories."""
 from typing import Any, Generic, TypeVar
 
-from sqlalchemy import select, func, and_, or_
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import Base
+from app.models.investigation import Investigation
 
 ModelType = TypeVar("ModelType", bound=Base)
 
@@ -83,17 +84,15 @@ class BaseRepository(Generic[ModelType]):
         return result.scalar_one()
 
 
-class InvestigationRepository(BaseRepository["Investigation"]):
+class InvestigationRepository(BaseRepository[Investigation]):
     """Repository for investigation operations."""
 
     async def get_by_session(
         self,
         session_id: str,
         user_id: str | None = None,
-    ) -> list["Investigation"]:
+    ) -> list[Investigation]:
         """Get all investigations for a session."""
-        from app.models.investigation import Investigation
-
         query = select(Investigation).where(
             Investigation.session_id == session_id
         ).order_by(Investigation.started_at.desc())
@@ -104,10 +103,8 @@ class InvestigationRepository(BaseRepository["Investigation"]):
         result = await self.session.execute(query)
         return list(result.scalars().all())
 
-    async def get_recent(self, limit: int = 10) -> list["Investigation"]:
+    async def get_recent(self, limit: int = 10) -> list[Investigation]:
         """Get recent investigations."""
-        from app.models.investigation import Investigation
-
         query = select(Investigation).order_by(
             Investigation.started_at.desc()
         ).limit(limit)
@@ -119,10 +116,8 @@ class InvestigationRepository(BaseRepository["Investigation"]):
         self,
         question: str,
         limit: int = 5,
-    ) -> list["Investigation"]:
+    ) -> list[Investigation]:
         """Search for similar investigations by question."""
-        from app.models.investigation import Investigation
-
         # Use PostgreSQL full-text search if available
         query = select(Investigation).where(
             Investigation.question.ilike(f"%{question}%")

@@ -1,21 +1,21 @@
 """LangGraph workflow compilation and execution."""
-from typing import Any, AsyncGenerator
-import json
+from collections.abc import AsyncGenerator
+from typing import Any
 
 import structlog
-from langgraph.graph import StateGraph, END
+from langgraph.graph import END, StateGraph
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.agents.cohort import CohortAnalysisAgent
 from app.agents.intent import IntentAgent
 from app.agents.metrics import MetricsAgent
-from app.agents.sql import SQLAgent
-from app.agents.cohort import CohortAnalysisAgent
-from app.agents.segmentation import SegmentationAgent
 from app.agents.root_cause import RootCauseAgent
-from app.agents.visualization import VisualizationAgent
+from app.agents.segmentation import SegmentationAgent
+from app.agents.sql import SQLAgent
 from app.agents.summary import ExecutiveSummaryAgent
+from app.agents.visualization import VisualizationAgent
 from app.graph.state import InvestigationState, create_initial_state
-from app.schemas import InvestigationStatus, AnalysisType
+from app.schemas import AnalysisType, InvestigationStatus
 
 logger = structlog.get_logger(__name__)
 

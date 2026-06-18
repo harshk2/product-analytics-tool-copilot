@@ -1,5 +1,4 @@
 """Visualization Agent: Creates appropriate chart specifications for findings."""
-import json
 from typing import Any
 from uuid import uuid4
 
@@ -7,7 +6,7 @@ import structlog
 
 from app.agents.base import BaseAgent
 from app.graph.state import InvestigationState
-from app.schemas import Visualization, ChartConfig, ChartType, DataPoint
+from app.schemas import ChartConfig, ChartType, Visualization
 
 logger = structlog.get_logger(__name__)
 

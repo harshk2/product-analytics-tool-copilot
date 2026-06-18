@@ -25,8 +25,9 @@ async def execute_query(
     db: AsyncSession = Depends(get_db),
 ):
     """Execute a natural language analytics query."""
-    from app.agents.sql import SQLAgent
     import time
+
+    from app.agents.sql import SQLAgent
 
     sql_agent = SQLAgent(db)
 
@@ -50,7 +51,7 @@ async def execute_query(
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f"Failed to generate query: {str(e)}",
-        )
+        ) from e
 
     sql = sql_response.get("sql", "")
     explanation = sql_response.get("explanation")
@@ -71,7 +72,7 @@ async def execute_query(
 
         columns = list(result.keys())
         rows = result.fetchmany(1000)
-        results = [dict(zip(columns, row)) for row in rows]
+        results = [dict(zip(columns, row, strict=False)) for row in rows]
 
         return QueryResult(
             query=sql,
@@ -86,7 +87,7 @@ async def execute_query(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Query execution failed: {str(e)}",
-        )
+        ) from e
 
 
 @router.post(

@@ -1,6 +1,6 @@
 """Metrics Agent: Identifies and quantifies relevant metrics for an investigation."""
-from typing import Any
 from datetime import datetime, timedelta
+from typing import Any
 
 import structlog
 

@@ -1,8 +1,7 @@
 """Application configuration management."""
 from functools import lru_cache
-from typing import Any
 
-from pydantic import Field, PostgresDsn, RedisDsn, model_validator
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -19,7 +18,7 @@ class Settings(BaseSettings):
     # Application
     APP_NAME: str = "AI Product Analytics Copilot"
     APP_VERSION: str = "0.1.0"
-    ENVIRONMENT: str = Field(default="development", pattern="^(development|staging|production)$")
+    ENVIRONMENT: str = Field(default="development", pattern="^(development|staging|production|testing)$")
     DEBUG: bool = False
     LOG_LEVEL: str = "INFO"
 

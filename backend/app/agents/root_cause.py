@@ -5,7 +5,7 @@ import structlog
 
 from app.agents.base import BaseAgent
 from app.graph.state import InvestigationState
-from app.schemas import RootCauseResult, Hypothesis, Evidence
+from app.schemas import Evidence, Hypothesis, RootCauseResult
 
 logger = structlog.get_logger(__name__)
 
@@ -265,7 +265,7 @@ class RootCauseAgent(BaseAgent):
                 if rows:
                     data_summary.append(f"**{name}** ({len(rows)} rows): {rows[:3]}")
             if data_summary:
-                sections.append(f"## Data Evidence\n" + "\n".join(data_summary))
+                sections.append("## Data Evidence\n" + "\n".join(data_summary))
 
         sections.append(
             "\n## Task\nBased on all the evidence above, generate a comprehensive root cause analysis. "
